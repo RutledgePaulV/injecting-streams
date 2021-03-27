@@ -12,8 +12,8 @@ import java.io.*;
 public class InjectingOutputStream extends FilterOutputStream {
 
     private final InputStream injection;
-    private volatile boolean injected = false;
-    private volatile int bufferPos = 0;
+    private boolean injected = false;
+    private int bufferPos = 0;
     private final byte[] delimiter;
 
     public InjectingOutputStream(OutputStream out, String delimiter, String injection) {
