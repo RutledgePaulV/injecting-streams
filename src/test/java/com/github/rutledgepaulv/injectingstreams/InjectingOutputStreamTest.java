@@ -2,6 +2,7 @@ package com.github.rutledgepaulv.injectingstreams;
 
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -14,6 +15,15 @@ import static java.nio.charset.Charset.defaultCharset;
 import static org.junit.Assert.assertEquals;
 
 public class InjectingOutputStreamTest {
+
+    @Test
+    public void constructors() {
+        new InjectingOutputStream(new ByteArrayOutputStream(), "Test", "Test".getBytes());
+        new InjectingOutputStream(new ByteArrayOutputStream(), "Test".getBytes(), "Test");
+        new InjectingOutputStream(new ByteArrayOutputStream(), "Test".getBytes(), "Test".getBytes());
+        new InjectingOutputStream(new ByteArrayOutputStream(), "Test", new ByteArrayInputStream("Test".getBytes()));
+        new InjectingOutputStream(new ByteArrayOutputStream(), "Test".getBytes(), new ByteArrayInputStream("Test".getBytes()));
+    }
 
     @Test
     public void fuzzing() throws IOException {
