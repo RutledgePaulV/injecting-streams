@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/RutledgePaulV/injecting-streams.svg)](https://travis-ci.org/RutledgePaulV/injecting-streams)
+[![Build Status](https://www.travis-ci.com/RutledgePaulV/injecting-streams.svg?branch=develop)](https://www.travis-ci.com/RutledgePaulV/injecting-streams)
 [![Coverage Status](https://coveralls.io/repos/RutledgePaulV/injecting-streams/badge.svg?branch=develop&service=github)](https://coveralls.io/github/RutledgePaulV/injecting-streams?branch=develop)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.rutledgepaulv/injecting-streams/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.rutledgepaulv/injecting-streams)
 
