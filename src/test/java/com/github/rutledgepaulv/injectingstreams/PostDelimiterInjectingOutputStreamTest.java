@@ -14,23 +14,35 @@ import java.util.stream.Collectors;
 import static java.nio.charset.Charset.defaultCharset;
 import static org.junit.Assert.assertEquals;
 
-public class InjectingOutputStreamTest {
+public class PostDelimiterInjectingOutputStreamTest {
 
     @Test
     public void constructors() {
-        new InjectingOutputStream(new ByteArrayOutputStream(), "Test", "Test".getBytes());
-        new InjectingOutputStream(new ByteArrayOutputStream(), "Test".getBytes(), "Test");
-        new InjectingOutputStream(new ByteArrayOutputStream(), "Test".getBytes(), "Test".getBytes());
-        new InjectingOutputStream(new ByteArrayOutputStream(), "Test", new ByteArrayInputStream("Test".getBytes()));
-        new InjectingOutputStream(new ByteArrayOutputStream(), "Test".getBytes(), new ByteArrayInputStream("Test".getBytes()));
+        new PostDelimiterInjectingOutputStream(new ByteArrayOutputStream(), "Test", "Test".getBytes());
+        new PostDelimiterInjectingOutputStream(new ByteArrayOutputStream(), "Test".getBytes(), "Test");
+        new PostDelimiterInjectingOutputStream(new ByteArrayOutputStream(), "Test".getBytes(), "Test".getBytes());
+        new PostDelimiterInjectingOutputStream(new ByteArrayOutputStream(), "Test", new ByteArrayInputStream("Test".getBytes()));
+        new PostDelimiterInjectingOutputStream(new ByteArrayOutputStream(), "Test".getBytes(), new ByteArrayInputStream("Test".getBytes()));
     }
 
     @Test
-    public void fuzzing() throws IOException {
+    public void fuzzingSingleCharacterDelimiter() throws IOException {
 
         for (int i = 0; i < 10000; i++) {
             ByteArrayOutputStream rawOut = new ByteArrayOutputStream();
-            fuzzyWrite(new InjectingOutputStream(rawOut, "hello ", "world "), "before hello after");
+            fuzzyWrite(new PostDelimiterInjectingOutputStream(rawOut, "h", "world "), "before hello after");
+            String finalOutput = new String(rawOut.toByteArray(), defaultCharset());
+            assertEquals("before hworld ello after", finalOutput);
+        }
+
+    }
+
+    @Test
+    public void fuzzingLongString() throws IOException {
+
+        for (int i = 0; i < 10000; i++) {
+            ByteArrayOutputStream rawOut = new ByteArrayOutputStream();
+            fuzzyWrite(new PostDelimiterInjectingOutputStream(rawOut, "hello ", "world "), "before hello after");
             String finalOutput = new String(rawOut.toByteArray(), defaultCharset());
             assertEquals("before hello world after", finalOutput);
         }
