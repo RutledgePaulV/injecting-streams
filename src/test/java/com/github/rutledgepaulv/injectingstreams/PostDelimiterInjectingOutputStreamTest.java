@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import static com.github.rutledgepaulv.injectingstreams.InjectingStreams.injectAfterOutput;
 import static java.nio.charset.Charset.defaultCharset;
 import static org.junit.Assert.assertEquals;
 
@@ -18,6 +19,12 @@ public class PostDelimiterInjectingOutputStreamTest {
 
     @Test
     public void constructors() {
+        injectAfterOutput(new ByteArrayOutputStream(), "Test", "Test".getBytes());
+        injectAfterOutput(new ByteArrayOutputStream(), "Test".getBytes(), "Test");
+        injectAfterOutput(new ByteArrayOutputStream(), "Test".getBytes(), "Test".getBytes());
+        injectAfterOutput(new ByteArrayOutputStream(), "Test", new ByteArrayInputStream("Test".getBytes()));
+        injectAfterOutput(new ByteArrayOutputStream(), "Test".getBytes(), new ByteArrayInputStream("Test".getBytes()));
+
         new PostDelimiterInjectingOutputStream(new ByteArrayOutputStream(), "Test", "Test".getBytes());
         new PostDelimiterInjectingOutputStream(new ByteArrayOutputStream(), "Test".getBytes(), "Test");
         new PostDelimiterInjectingOutputStream(new ByteArrayOutputStream(), "Test".getBytes(), "Test".getBytes());
