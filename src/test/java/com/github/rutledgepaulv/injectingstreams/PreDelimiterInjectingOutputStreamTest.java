@@ -38,6 +38,26 @@ public class PreDelimiterInjectingOutputStreamTest {
     }
 
     @Test
+    public void beginningBoundsCheck() throws IOException {
+        for (int i = 0; i < 100000; i++) {
+            ByteArrayOutputStream rawOut = new ByteArrayOutputStream();
+            fuzzyWrite(new PreDelimiterInjectingOutputStream(rawOut, "h", "d"), "h");
+            String finalOutput = new String(rawOut.toByteArray(), defaultCharset());
+            assertEquals("dh", finalOutput);
+        }
+    }
+
+    @Test
+    public void terminalBoundsCheck() throws IOException {
+        for (int i = 0; i < 1000000; i++) {
+            ByteArrayOutputStream rawOut = new ByteArrayOutputStream();
+            fuzzyWrite(new PreDelimiterInjectingOutputStream(rawOut, "o", "d"), "hello");
+            String finalOutput = new String(rawOut.toByteArray(), defaultCharset());
+            assertEquals("helldo", finalOutput);
+        }
+    }
+
+    @Test
     public void fuzzingSingleCharacterDelimiter() throws IOException {
 
         for (int i = 0; i < 100000; i++) {
