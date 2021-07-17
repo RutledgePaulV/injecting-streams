@@ -20,6 +20,7 @@ public class PreDelimiterInjectingOutputStreamTest {
 
     @Test
     public void constructors() {
+        injectBeforeOutput(new ByteArrayOutputStream(), "Test", "Test");
         injectBeforeOutput(new ByteArrayOutputStream(), "Test", "Test".getBytes());
         injectBeforeOutput(new ByteArrayOutputStream(), "Test".getBytes(), "Test");
         injectBeforeOutput(new ByteArrayOutputStream(), "Test".getBytes(), "Test".getBytes());

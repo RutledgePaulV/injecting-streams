@@ -19,6 +19,7 @@ public class PostDelimiterInjectingOutputStreamTest {
 
     @Test
     public void constructors() {
+        injectAfterOutput(new ByteArrayOutputStream(), "Test", "Test");
         injectAfterOutput(new ByteArrayOutputStream(), "Test", "Test".getBytes());
         injectAfterOutput(new ByteArrayOutputStream(), "Test".getBytes(), "Test");
         injectAfterOutput(new ByteArrayOutputStream(), "Test".getBytes(), "Test".getBytes());
