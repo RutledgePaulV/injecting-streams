@@ -5,8 +5,8 @@
 ## Injecting Streams
 
 Implements a `java.io.OutputStream` that injects bytes as data is written to the original output stream. Bytes are
-injected following a delimiter of your choice (an array of known bytes). Correct for all uses of the returned stream,
-implemented efficiently, and has zero dependencies.
+injected before or after a delimiter of your choice (an array of known bytes). Correct for all uses of the returned 
+stream, carefully implemented for optimal efficiency, and has zero dependencies.
 
 ### Usage
 
@@ -17,7 +17,22 @@ markup or convert back into text.
 
 var source       = new FileInputStream("original.html");
 var sink         = new FileOutputStream("modified.html");
-var modifiedSink = new InjectingOutputStream(sink, "<head>", "<script>alert('hello, world')</script>");
+var modifiedSink = InjectingStreams.injectAfterOutput(sink, "<head>", "<script>alert('hello, world')</script>");
+
+try {
+    IOUtils.copy(source,modifiedSink);
+} finally {
+    IOUtils.close(source);
+    IOUtils.close(modifiedSink);
+}
+
+```
+
+```java
+
+var source       = new FileInputStream("original.html");
+var sink         = new FileOutputStream("modified.html");
+var modifiedSink = InjectingStreams.injectBeforeOutput(sink, "</body>", "<script>alert('hello, world')</script>");
 
 try {
     IOUtils.copy(source,modifiedSink);
@@ -36,7 +51,7 @@ try {
     <dependency>
         <groupId>com.github.rutledgepaulv</groupId>
         <artifactId>injecting-streams</artifactId>
-        <version>1.0</version>
+        <version>2.0</version>
     </dependency>
 </dependencies>
 
