@@ -5,38 +5,38 @@ import java.io.*;
 
 /**
  * An output stream that injects a stream of bytes immediately following the first series of
- * delimiter bytes. Useful for appending content to a stream following a known delimiter.
+ * delimiter bytes.
  *
  * Assumes a single writer (no synchronization)
  */
-public class InjectingOutputStream extends FilterOutputStream {
+public class PostDelimiterInjectingOutputStream extends FilterOutputStream {
 
     private final InputStream injection;
     private boolean injected = false;
     private int bufferPos = 0;
     private final byte[] delimiter;
 
-    public InjectingOutputStream(OutputStream out, String delimiter, String injection) {
+    public PostDelimiterInjectingOutputStream(OutputStream out, String delimiter, String injection) {
         this(out, delimiter.getBytes(), injection.getBytes());
     }
 
-    public InjectingOutputStream(OutputStream out, String delimiter, byte[] injection) {
+    public PostDelimiterInjectingOutputStream(OutputStream out, String delimiter, byte[] injection) {
         this(out, delimiter.getBytes(), injection);
     }
 
-    public InjectingOutputStream(OutputStream out, String delimiter, InputStream injection) {
+    public PostDelimiterInjectingOutputStream(OutputStream out, String delimiter, InputStream injection) {
         this(out, delimiter.getBytes(), injection);
     }
 
-    public InjectingOutputStream(OutputStream out, byte[] delimiter, String injection) {
+    public PostDelimiterInjectingOutputStream(OutputStream out, byte[] delimiter, String injection) {
         this(out, delimiter, injection.getBytes());
     }
 
-    public InjectingOutputStream(OutputStream out, byte[] delimiter, byte[] injection) {
+    public PostDelimiterInjectingOutputStream(OutputStream out, byte[] delimiter, byte[] injection) {
         this(out, delimiter, new ByteArrayInputStream(injection));
     }
 
-    public InjectingOutputStream(OutputStream out, byte[] delimiter, InputStream injection) {
+    public PostDelimiterInjectingOutputStream(OutputStream out, byte[] delimiter, InputStream injection) {
         super(out);
         this.delimiter = delimiter;
         this.injection = injection;
